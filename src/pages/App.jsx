@@ -1,40 +1,30 @@
 import React, { useState } from "react";
-import { Item } from "../components/Item";
-import "../styles/style.css";
+import { InputArea } from "../components/InputArea";
+import { TodoList } from "../components/TodoList";
 
 export const App = () => {
   const [todoList, setTodoList] = useState([]);
 
   const add_todo = () => {
     const add_text = document.getElementById("input_area").value;
-    document.getElementById("input_area").value = "";
-    setTodoList(todoList.push(add_text));
+    if (add_text !== "" && !todoList.includes(add_text)) {
+      document.getElementById("input_area").value = "";
+      setTodoList(todoList.concat(add_text));
+    }
   };
 
-  const delete_todo = () => {
-    // setTodoList(todoList.)
+  const delete_todo = (key) => {
+    const new_list = todoList.filter((text) => {
+      return text !== key;
+    });
+    setTodoList(new_list);
   };
 
   return (
     <>
-      <div className="input_container">
-        <input id="input_area" type="text" placeholder="TODOを入力" />
-        <button id="input_area" className="button" onClick={add_todo}>
-          追加
-        </button>
-      </div>
-      <div className="todo_container">
-        <p className="title">TODOリスト</p>
-        <ul>
-          {todoList.map((todoText) => {
-            return (
-              <li>
-                <Item text={todoText} delete_todo={delete_todo} />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <InputArea onClick={add_todo} />
+
+      <TodoList todoList={todoList} onClick={delete_todo} />
     </>
   );
 };

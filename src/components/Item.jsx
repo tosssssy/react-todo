@@ -1,13 +1,20 @@
 import React from "react";
+import { Button } from "./Button";
+import styled from "styled-components";
 
 export const Item = (props) => {
-  const { text, delete_todo } = props;
+  const { text, onClick } = props;
   return (
-    <div className="list_item">
+    <SListItem>
       <p>{text}</p>
-      <button className="button" onClick={delete_todo}>
-        削除
-      </button>
-    </div>
+      <Button onClick={onClick}>削除</Button>
+    </SListItem>
   );
 };
+
+const SListItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 4px;
+  height: 30px;
+`;
